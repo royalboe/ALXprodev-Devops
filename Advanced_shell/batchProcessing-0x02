@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Directory to save JSON files
-DATA_DIR="pokemon_data"
-
-# Create directory if it doesn't exist
-mkdir -p "$DATA_DIR"
 
 # List of Pokémon
 POKEMON_LIST=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
@@ -17,7 +12,7 @@ for name in "${POKEMON_LIST[@]}"; do
     API_URL="https://pokeapi.co/api/v2/pokemon/$name"
 
     # Output file path
-    OUTPUT_FILE="$DATA_DIR/$name.json"
+    OUTPUT_FILE="$name.json"
 
     # Use curl to get data and save to file
     curl -s "$API_URL" -o "$OUTPUT_FILE"
