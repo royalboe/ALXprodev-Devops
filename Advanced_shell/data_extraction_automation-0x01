@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+jq -r '.name, .height, .weight, .types[0].type.name' data.json | \
+awk 'BEGIN { ORS=""; }
+     NR==1 { printf "%s", toupper(substr($0,1,1)) substr($0,2) }
+     NR==2 { height=$0 / 10 }
+     NR==3 { weight=$0 / 10 }
+     NR==4 {
+       printf " is of type %s, weighs %.0fkg, and is %.1fm tall.\n",
+       toupper(substr($0,1,1)) substr($0,2), weight, height
+     }'
