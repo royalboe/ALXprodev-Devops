@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+OUTPUT_FILE="data.json"
+ERROR_FILE="errors.txt"
+POKEMON_NAME="pikachu"
+API_URL="https://pokeapi.co/api/v2/pokemon/$POKEMON_NAME"
+
+
+# read POKEMAN
+HTTP_STATUS=$(curl -s -w "%{http_code}" -o "$OUTPUT_FILE" "$API_URL")
+
+if [ "$HTTP_STATUS" -eq 200 ]; then
+    echo "Request successful. Response saved to $OUTPUT_FILE."
+else
+    echo "Something went wrong" >> "$ERROR_FILE"
+    echo "HTTP status code: $HTTP_STATUS" >> "$ERROR_FILE"
+    echo "Date: $(date)" >> "$ERROR_FILE"
+    echo "--------------------------------------" >> "$ERROR_FILE"
+    echo "Request failed. HTTP status code: $HTTP_STATUS. Errors saved to $ERROR_FILE."
+fi
