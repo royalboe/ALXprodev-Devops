@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 # Extract values with jq
-name=$(jq -r '.name' data.json)
+unformated_name=$(jq -r '.name' data.json)
 height=$(jq -r '.height' data.json)
 weight=$(jq -r '.weight' data.json)
-type=$(jq -r '.types[0].type.name' data.json)
+unformatted_type=$(jq -r '.types[0].type.name' data.json)
 
 # Convert height and weight to meters and kg using awk
 formatted_weight=$(echo "$weight" | awk '{printf "%.1f", $1 / 10}')
 formatted_height=$(echo "$height" | awk '{printf "%.1f", $1 / 10}')
 
 # Capitalize first letter of name and type using sed
-capitalized_name=$(echo "$name" | sed -E 's/^(.)/\U\1/')
-capitalized_type=$(echo "$type" | sed -E 's/^(.)/\U\1/')
+name=$(echo "$unformatted_name" | sed -E 's/^(.)/\U\1/')
+type=$(echo "$unformatted_type" | sed -E 's/^(.)/\U\1/')
 
 # Final output
-echo "$capitalized_name is of type $capitalized_type, weighs ${formatted_weight}kg, and is ${formatted_height}m tall."
+echo "$name is of type $type, weighs ${formatted_weight}kg, and is ${formatted_height}m tall."
