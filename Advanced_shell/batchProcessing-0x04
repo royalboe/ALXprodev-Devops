@@ -22,7 +22,18 @@ for name in "${POKEMON_LIST[@]}"; do
     } &
 done
 
-# Wait for all background processes to finish
-wait
+# Show all running background jobs
+jobs
+
+# Wait for all jobs and kill any that hang
+while jobs > /dev/null; do
+    sleep 1
+    jobs -p | while read pid; do
+        # Optional: add a timeout check or condition
+        kill -0 "$pid" 2>/dev/null || true
+    done
+    # Break loop when no more jobs
+    [ -z "$(jobs -p)" ] && break
+done
 
 echo "All Pokémon data fetches completed!"
